@@ -1,14 +1,14 @@
 version: "3.9"
 services:
   postgres_db:
-    image: postgres:latest
+    image: postgres:16
     container_name: opportunity_postgres
     environment:
       POSTGRES_DB: student_opportunities_db
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: app_password
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/01_init.sql
@@ -38,6 +38,7 @@ services:
       DB_NAME: student_opportunities_db
       DB_USER: app_user
       DB_PASSWORD: app_password
+      PYTHONPATH: "/app"
     depends_on:
       - postgres_db
     restart: unless-stopped

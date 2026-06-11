@@ -12,9 +12,12 @@ query = "SELECT * FROM opportunities WHERE 1=1"
 if search_term:
     query += f" AND (job_title ILIKE '%%{search_term}%%' OR company_name ILIKE '%%{search_term}%%')"
 if cat_filter:
-    query += f" AND category IN ('{"','".join(cat_filter)}')"
+    # Extracted to avoid quote clashing in Python 3.11
+    cats = "','".join(cat_filter)
+    query += f" AND category IN ('{cats}')"
 if mode_filter:
-    query += f" AND work_mode IN ('{"','".join(mode_filter)}')"
+    modes = "','".join(mode_filter)
+    query += f" AND work_mode IN ('{modes}')"
 
 df = run_query(query)
 st.metric("Records Found", len(df))
