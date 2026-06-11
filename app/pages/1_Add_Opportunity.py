@@ -1,27 +1,35 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score
+import streamlit as st
+from app.queries import execute_write
+import datetime
 
-# 1. Load your uploaded dataset file using pandas
-filename = "diabetes.csv" 
-df = pd.read_csv(filename)
+st.title("➕ Add New Opportunity")
 
-# 2. Split features (X) and target label (y)
-X = df.drop('Outcome', axis=1)
-y = df['Outcome']
-
-# 3. Split into training and test datasets using an 80/20 ratio
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
-
-# 4. Initialize and train the Gaussian Naive Bayes Classifier
-model = GaussianNB()
-model.fit(X_train, y_train)
-
-# 5. Make predictions and evaluate accuracy
-predictions = model.predict(X_test)
-accuracy = accuracy_score(y_test, predictions)
-
-# Print final results
-print(f"Split {len(df)} rows into train={len(X_train)} and test={len(X_test)} rows")
-print(f"Accuracy: {accuracy * 100:.3f}%")
+if st.session_state.get("role") != "Admin":
+    st.error("🔒 Access Denied. Admin login required to add records.")
+else:
+    with st.form("add_job_form", clear_on_submit=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            comp = st.text_input("Company Name*")
+            title = st.text_input("Job Title*")
+            cat = st.selectbox("Category", ["Data Science", "AI", "Web Development", "Cyber Security", "Software Engineering"])
+            city = st.text_input("City")
+            country = st.text_input("Country", value="Pakistan")
+        with col2:
+            mode = st.selectbox("Work Mode", ["Remote", "Onsite", "Hybrid"])
+            s_min = st.number_input("Min Salary", value=50000)
+            s_max = st.number_input("Max Salary", value=150000)
+            exp = st.selectbox("Experience Level", ["Entry-Level", "Mid-Level", "Senior"])
+            deadline = st.date_input("Deadline", min_value=datetime.date.today())
+        
+        skills = st.text_area("Required Skills*")
+        link = st.text_input("Source Link")
+        
+        if st.form_submit_button("Save Record"):
+            if not comp or not title or not skills:
+                st.error("Please fill required fields (*).")
+            else:
+                q = """INSERT INTO opportunities (company_name, job_title, category, city, country, work_mode, required_skills, salary_min, salary_max, experience_level, application_deadline, source_link)
+                       VALUES (:comp, :title, :cat, :city, :country, :mode, :skills, :s_min, :s_max, :exp, :deadline, :link)"""
+                execute_write(q, {"comp": comp, "title": title, "cat": cat, "city": city, "country": country, "mode": mode, "skills": skills, "s_min": s_min, "s_max": s_max, "exp": exp, "deadline": deadline, "link": link})
+                st.success("Record added successfully!")
