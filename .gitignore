@@ -1,0 +1,30 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+venv/
+env/
+.venv/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Environment Variables (CRITICAL)
+.env
+
+# Docker / Database Data (if mapped locally)
+postgres_data/
+*.db
+*.sqlite3
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
