@@ -1,47 +1,26 @@
-# Streamlit Postgres Assignment
+# 🎓 Internship & Job Tracking Dashboard
 
-Starter scaffold for the Streamlit + PostgreSQL assignment. This repository contains a Streamlit app that connects to PostgreSQL and implements CRUD operations for "opportunities" plus analytics and utility pages.
+A containerized, multi-page web application built with Streamlit and PostgreSQL to help university departments track, manage, and analyze student internship and job opportunities.
 
-Structure
-```
-streamlit-postgres-assignment/
-├── app/
-│   ├── main.py
-│   ├── db.py
-│   ├── queries.py
-│   ├── auth.py
-│   ├── utils.py
-│   └── pages/
-│       ├── 1_Add_Opportunity.py
-│       ├── 2_View_Search.py
-│       ├── 3_Update_Opportunity.py
-│       ├── 4_Delete_Opportunity.py
-│       ├── 5_Analytics_Dashboard.py
-│       ├── 6_CSV_Upload_Export.py
-│       ├── 7_Duplicate_Detection.py
-│       ├── 8_Deadline_Alerts.py
-│       └── 9_Database_Health_Check.py
-├── database/
-│   ├── init.sql
-│   └── seed_data.sql
-├── screenshots/
-├── docker-compose.yml
-├── Dockerfile
-├── requirements.txt
-├── .env.example
-├── README.md
-└── report.pdf
-```
+## 👥 Team Members
+* Rana M. Zain Zahid
+* Usman Butt
+* Muhammad Abdullah
 
-How to run (development):
+## 🏗️ System Architecture
+The application runs entirely within Docker Compose, orchestrating three main services:
 
-1. Create a Python virtual environment and install dependencies from `requirements.txt`.
-2. Provide a `.env` file based on `.env.example` with your Postgres credentials.
-3. Start Postgres (locally or via docker-compose) and run `database/init.sql` and `database/seed_data.sql`.
-4. Run the Streamlit app:
+User Browser    |    
+v
+Streamlit App Container (Port 8501)    |
+v
+PostgreSQL Container (Port 5432)  <---->  pgAdmin Container (Port 5050)    |
+v
+Docker Volume for Persistent Data
 
-```powershell
-streamlit run app/main.py
-```
+## 🚀 Setup & Execution
 
-Files added are minimal starters. Update queries and connection settings to match your environment.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ranazain26/streamlit-postgres
+   cd streamlit-postgres
