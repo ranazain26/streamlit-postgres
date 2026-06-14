@@ -28,7 +28,7 @@ The application runs entirely within a Docker Compose environment, orchestrating
 1. **Clone the repository:**
 ```bash
    git clone https://github.com/ranazain26/streamlit-postgres
-   cd streamlit-postgres-assignment
+   cd streamlit-postgres
 
 ```
 
