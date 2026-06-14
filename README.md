@@ -27,7 +27,7 @@ The application runs entirely within a Docker Compose environment, orchestrating
 ### Installation Steps
 1. **Clone the repository:**
 ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/ranazain26/streamlit-postgres
    cd streamlit-postgres-assignment
 
 ```
